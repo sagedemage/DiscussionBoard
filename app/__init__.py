@@ -4,6 +4,11 @@ from flask import Flask, render_template
 from app.cli import create_database
 from app.db import db
 from app.db.models import User
+from app.simple_pages import simple_pages
+from app.auth import auth
+from app.context_processors import utility_processor
+from flask_bootstrap import Bootstrap5
+from flask_login import LoginManager
 
 
 def page_not_found(e):
@@ -19,11 +24,24 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.abspath(db_dir)
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
+    Bootstrap5(app)
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    app.register_blueprint(simple_pages)
+    app.register_blueprint(auth)
+    
+    app.context_processor(utility_processor)
+    
     # add command function to cli commands
     app.cli.add_command(create_database)
 
+    """
     @app.route('/')
     def hello():
         return 'Hello, World!'
+    """
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.get_id(user_id)
 
     return app
