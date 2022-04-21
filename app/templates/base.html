@@ -72,7 +72,9 @@
         {{ render_messages() }}
     </div>
     <div class="row mt-5">
-
+        <header>
+            <h2> {% block header %}{% endblock %} </h2>
+        </header>
         {% block content %}
         {% endblock %}
     </div>
