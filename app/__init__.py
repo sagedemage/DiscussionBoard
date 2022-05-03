@@ -26,8 +26,10 @@ login_manager = flask_login.LoginManager()
 
 def create_app():
     """Create and configure an instance of the Flask application."""
+    # Flask app
     app = Flask(__name__)
-    app.secret_key = 'This is an INSECURE secret!! DO NOT use this in production!!'
+
+    # Set the branch this project (production, testing, or development)
     app.config["ENV"] = "development"
 
     env = app.config["ENV"]
@@ -40,14 +42,6 @@ def create_app():
 
     # Flask Mail
     app.mail = Mail(app)
-
-    """
-    app.register_error_handler(404, page_not_found)
-    db_dir = "database/db.sqlite"
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.abspath(db_dir)
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    db.init_app(app)
-    """
 
     # login manager
     login_manager.init_app(app)
