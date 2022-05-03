@@ -5,7 +5,8 @@ Created on Tue Apr 19 22:00:28 2022
 @author: salsa
 """
 
-def utility_processor():
+
+def utility_text_processors():
     def format_price(amount, currency="$"):
         return f"{amount:.2f}{currency}"
     
