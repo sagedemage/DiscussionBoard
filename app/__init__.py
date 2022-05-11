@@ -17,6 +17,7 @@ from app.logging_config import log_con, LOGGING_CONFIG
 
 from app.simple_pages import simple_pages
 from app.auth import auth
+from app.discussion import discussion
 from app.db import database
 
 from app.error_handlers import error_handlers
@@ -36,7 +37,6 @@ def create_app():
 
     app.config["ENV"] = "production"
 
-    # This looks fishy
     if app.config["ENV"] == "production":
         app.config.from_object("app.config.ProductionConfig")
     elif app.config["ENV"] == "development":
@@ -66,6 +66,7 @@ def create_app():
     # load functions with web interfaces
     app.register_blueprint(simple_pages)
     app.register_blueprint(auth)
+    app.register_blueprint(discussion)
     app.register_blueprint(database)
 
     # load functionality without a web interfaces

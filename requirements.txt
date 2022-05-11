@@ -48,3 +48,4 @@ rfc3339
 Flask-Mail
 Flask-Cors
 python-dotenv
+sqlalchemy-serializer

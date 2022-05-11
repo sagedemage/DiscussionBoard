@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% from 'bootstrap5/table.html' import render_table %}
+{% from "bootstrap5/pagination.html" import render_pagination %}
+
+
+<div class="row col-8">
+    {% block title %} Discussion {% endblock %}
+    {% block content %}
+        <a href="{{ url_for("discussion.add_post") }}" class="btn col-3 mb-5 btn-info" role="button">Add post</a>
+        <h2> Discussion Board </h2>
+        {{ render_table(data, titles, show_actions=True, table_classes='table-striped', header_classes='thead-dark', responsive=True, responsive_class='table-responsive-sm',
+                model=Posts,
+                edit_url=edit_url,
+                delete_url=delete_url)
+                }}
+
+
+    {% endblock %}
+</div>
+
+
+
