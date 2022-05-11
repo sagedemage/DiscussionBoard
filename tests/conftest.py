@@ -11,6 +11,7 @@ def web_app():
     web_app = create_app()
     web_app.config.update({
         "TESTING": True,
+        "WTF_CSRF_ENABLED": False,
     })
     yield web_app
 

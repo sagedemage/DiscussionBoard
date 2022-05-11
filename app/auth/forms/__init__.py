@@ -1,29 +1,36 @@
 """ Authentication Forms """
-from flask_wtf import FlaskForm, csrf
-from wtforms import StringField, PasswordField, SubmitField, validators
+from flask_wtf import FlaskForm
+from wtforms import validators
+from wtforms.fields import *
 
 
-class RegisterForm(FlaskForm):
+class login_form(FlaskForm):
+    """ Login form """
+    email = EmailField('Email Address', [
+        validators.DataRequired(),
+    ])
+
+    password = PasswordField('Password', [
+        validators.DataRequired(),
+        validators.length(min=6, max=35)
+    ])
+
+    submit = SubmitField()
+
+
+class register_form(FlaskForm):
     """ Registration form """
-    email = StringField('Email Address', [
+    email = EmailField('Email Address', [
         validators.DataRequired(),
-        validators.Length(min=6, max=40)
-    ])
-    password = PasswordField ('New Password', [
+
+    ], description="Signup with an email")
+
+    password = PasswordField('New Password', [
         validators.DataRequired(),
-        validators.Length(min=6, max=40),
-        validators.EqualTo('confirm', message='Password must match')
-    ])
-    confirm = PasswordField('Repeat Password', [
-        validators.DataRequired()
-    ])
-    submit = SubmitField('Submit')
+        validators.length(min=6, max=35),
+        validators.EqualTo('confirm', message='Password must match'),
 
+    ], description="Create a password ")
 
-class LoginForm(FlaskForm):
-    email = StringField('Email Address', [
-        validators.DataRequired()
-    ])
-    password = PasswordField('Password'), [
-        validators.DataRequired()
-    ]
+    confirm = PasswordField('Repeat Password', description="please retype your password")
+    submit = SubmitField()

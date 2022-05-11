@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from sqlalchemy.orm import relationship
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.db import db
 from flask_login import UserMixin
@@ -22,7 +23,7 @@ class User(UserMixin, db.Model):
 
     def __init__(self, email, password):
         self.email = email
-        self.password = generate_password_hash(password)
+        self.password = password
         self.registered_on = datetime.utcnow()
 
     def is_authenticated(self):
@@ -37,10 +38,8 @@ class User(UserMixin, db.Model):
     def get_id(self):
         return self.id
 
-    """
     def set_password(self, password):
         self.password = generate_password_hash(password)
-    """
 
     def check_password(self, password):
         return check_password_hash(self.password, password)

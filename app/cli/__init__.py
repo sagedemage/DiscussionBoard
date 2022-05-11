@@ -1,3 +1,7 @@
+"""
+Custom Flask Command Options
+"""
+
 import click
 from flask.cli import with_appcontext
 from app.db import db

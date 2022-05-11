@@ -1,12 +1,14 @@
 """A simple flask web app"""
+import logging
 import os
+from logging.handlers import RotatingFileHandler
 
 import flask_login
-from flask import Flask, render_template
+from flask import Flask
 from flask_bootstrap import Bootstrap5
 from flask_wtf.csrf import CSRFProtect
 from flask_cors import CORS
-from flask_mail import Mail
+# from flask_mail import Mail
 
 from app.db import db
 from app.db.models import User
@@ -20,7 +22,7 @@ from app.db import database
 from app.error_handlers import error_handlers
 from app.context_processors import utility_text_processors
 
-mail = Mail()
+# mail = Mail()
 login_manager = flask_login.LoginManager()
 
 
@@ -29,30 +31,37 @@ def create_app():
     # Flask app
     app = Flask(__name__)
 
-    # Set the branch this project (production, testing, or development)
-    app.config["ENV"] = "development"
+    # CSRF protection of form submissions
+    csrf = CSRFProtect(app)
 
-    env = app.config["ENV"]
-    if env == "production":
+    app.config["ENV"] = "production"
+
+    # This looks fishy
+    if app.config["ENV"] == "production":
         app.config.from_object("app.config.ProductionConfig")
-    elif env == "development":
+    elif app.config["ENV"] == "development":
         app.config.from_object("app.config.DevelopmentConfig")
-    elif env == "testing":
+    elif app.config["ENV"] == "testing":
         app.config.from_object("app.config.TestingConfig")
 
+    """
+    if os.environ.get("FLASK_ENV") == "production":
+        app.config.from_object("app.config.ProductionConfig")
+    elif os.environ.get("FLASK_ENV") == "development":
+        app.config.from_object("app.config.DevelopmentConfig")
+    elif os.environ.get("FLASK_ENV") == "testing":
+        app.config.from_object("app.config.TestingConfig")
+    """
+
     # Flask Mail
-    app.mail = Mail(app)
+    # app.mail = Mail(app)
 
     # login manager
     login_manager.init_app(app)
     login_manager.login_view = "auth.login"
 
-    # CSRF protection of form submissions
-    csrf = CSRFProtect(app)
-    csrf.exempt(auth)
-
     # Flask Bootstrap
-    Bootstrap5(app)
+    boootstrap = Bootstrap5(app)
 
     # load functions with web interfaces
     app.register_blueprint(simple_pages)
@@ -69,6 +78,7 @@ def create_app():
     app.cli.add_command(drop_database)
 
     db.init_app(app)
+
     api_v1_cors_config = {
         "methods": ["OPTIONS", "GET", "POST"],
     }
@@ -81,6 +91,6 @@ def create_app():
 @login_manager.user_loader
 def user_loader(user_id):
     try:
-        return User.get_id(int(user_id))
+        return User.query.get(int(user_id))
     except:
         return None

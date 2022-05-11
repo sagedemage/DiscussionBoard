@@ -15,21 +15,21 @@ simple_pages = Blueprint('simple_pages', __name__,
 def index():
     try:
         return render_template('index.html')
-    except:
+    except TemplateNotFound:
         abort(404)
 
 @simple_pages.route('/about')
 def about():
     try:
         return render_template('about.html')
-    except:
+    except TemplateNotFound:
         abort(404)
 
 @simple_pages.route('/welcome')
 def welcome():
     try:
         return render_template('welcome.html')
-    except:
+    except TemplateNotFound:
         abort(404)
 
 
