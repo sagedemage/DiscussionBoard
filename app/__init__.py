@@ -10,7 +10,7 @@ from flask_mail import Mail
 
 from app.db import db
 from app.db.models import User
-from app.cli import create_database
+from app.cli import create_database, drop_database
 from app.logging_config import log_con, LOGGING_CONFIG
 
 from app.simple_pages import simple_pages
@@ -66,6 +66,8 @@ def create_app():
     
     # add command function to cli commands
     app.cli.add_command(create_database)
+    app.cli.add_command(drop_database)
+
     db.init_app(app)
     api_v1_cors_config = {
         "methods": ["OPTIONS", "GET", "POST"],
