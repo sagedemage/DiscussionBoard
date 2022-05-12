@@ -32,7 +32,7 @@ def register():
                 user.is_admin = 1
                 db.session.add(user)
                 db.session.commit()
-            flash('Congratulations, you are a registered user', "success")
+            flash('Congratulations, you are a registered user!', "success")
             return redirect(url_for('auth.login'), 302)
         else:
             flash('Already Registered')

@@ -28,7 +28,7 @@ class register_form(FlaskForm):
     password = PasswordField('New Password', [
         validators.DataRequired(),
         validators.length(min=6, max=35),
-        validators.EqualTo('confirm', message='Password must match'),
+        validators.EqualTo('confirm', message='Passwords must match'),
 
     ], description="Create a password ")
 

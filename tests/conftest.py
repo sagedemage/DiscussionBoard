@@ -1,4 +1,4 @@
-"""Test Configuration Setup"""
+""" Test Configuration Setup """
 # pylint: disable=redefined-outer-name
 
 import pytest
