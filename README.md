@@ -10,6 +10,18 @@
 
 This is the flask web application for Project 4.
 
+## Purpose
+
+* The purpose of the web application is to create an environment for anyone to post their opinions
+or areas of interest on the discussion board.  It is very opened ended.
+  * For example, people can post about their favorite movies, video games or sports team.
+* The content the users add to the discussion board adds value for other users viewing this web 
+  application. Users can get information and learn from other users. The web app does not have the ability for users to react or reply to
+  people's posts.
+
+## Environmental Variables
+Fill in the environmental variables in .env.test file
+
 ## Setting up the docker container of the web applicaiton
 Build the docker container:
 ````

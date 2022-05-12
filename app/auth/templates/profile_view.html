@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %} User Profile {% endblock %}
+
+{% block content %}
+    <a href="{{ url_for("auth.edit_profile") }}" class="btn col-3 mb-5 btn-info" role="button">Profile Edit</a>
+    <h2> User Profile </h2>
+    <div class="row mt-5">
+
+         <div class="border border-1 border-dark mx-auto p-4">
+                User Email: {{ user.email }}
+                <pre>{{ user.about }}</pre>
+         </div>
+    </div>
+
+{% endblock %}
