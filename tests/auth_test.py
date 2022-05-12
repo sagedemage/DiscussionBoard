@@ -28,6 +28,12 @@ def test_dashboard_request(client):
     assert response.status_code == 302
 
 
+def test_user_profile_request(client):
+    """ Test dashboard page response """
+    response = client.get("/profile")
+    assert response.status_code == 302
+
+
 def test_register_email_and_password_format(client):
     """ Ensure that the registration page has right the format
     for email, password, and confirm inputs """
@@ -129,13 +135,19 @@ def test_deny_access_to_dashboard(client):
 
 def test_allow_access_to_dashboard(client):
     # allowing access to the dashboard for logged in users (Test 10)
-    response = client.post("/login", data={"email": "test1000@gmail.com",
-                                              "password": "test1000", "confirm": "test1000"})
+    response = client.post("/login", data={"email": "test1000@gmail.com", "password": "test1000"})
     assert response.headers["Location"] == "/dashboard"
 
 
 def test_deny_access_to_user_profile(client):
     """ Deny Access to the Dashboard """
-    # denying access to the user profile for users not logged
+    # test denying access to the user profile for users not logged
     response = client.get("/profile", follow_redirects=True)
     assert b"Please log in to access this page." in response.data
+
+
+def test_allow_access_to_user_profile(client):
+    # test allowing access to the dashboard for users logged in
+    client.post("/login", data={"email": "test1000@gmail.com", "password": "test1000"})
+    response = client.get("/profile")
+    assert response.status_code == 200
