@@ -34,3 +34,10 @@ class register_form(FlaskForm):
 
     confirm = PasswordField('Repeat Password', description="please retype your password")
     submit = SubmitField()
+
+
+class profile_edit_form(FlaskForm):
+    about = TextAreaField('About', [
+        validators.length(min=6, max=30)
+    ], description="Add information about yourself")
+    submit = SubmitField()

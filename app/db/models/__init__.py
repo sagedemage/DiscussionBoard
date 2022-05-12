@@ -40,6 +40,9 @@ class User(UserMixin, db.Model):
     def get_id(self):
         return self.id
 
+    def get_email(self):
+        return self.email
+
     def set_password(self, password):
         self.password = generate_password_hash(password)
 

@@ -36,6 +36,7 @@
                     <div class="navbar-nav mr-auto">
                         {% if current_user.is_authenticated %}
                             {{ render_nav_item('auth.dashboard','Dashboard' ) }}
+                            {{ render_nav_item('discussion.browse_posts','Discussion Board') }}
                         {% else %}
                             {{ render_nav_item('simple_pages.index', 'Home') }}
                         {% endif %}
@@ -51,8 +52,8 @@
                                 My Account
                             </a>
                             <ul class="dropdown-menu " aria-labelledby="navbarDarkDropdownMenuLink">
-                                <li><a class="dropdown-item" href="{{ url_for("discussion.browse_posts") }}">
-                                    Discussion Board
+                                 <li><a class="dropdown-item" href="{{ url_for("auth.view_profile") }}">
+                                    Profile
                                 </a></li>
                                 <li><a class="dropdown-item" href="{{ url_for("auth.logout") }}">Logout</a></li>
                             </ul>

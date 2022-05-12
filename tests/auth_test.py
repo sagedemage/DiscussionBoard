@@ -132,3 +132,10 @@ def test_allow_access_to_dashboard(client):
     response = client.post("/login", data={"email": "test1000@gmail.com",
                                               "password": "test1000", "confirm": "test1000"})
     assert response.headers["Location"] == "/dashboard"
+
+
+def test_deny_access_to_user_profile(client):
+    """ Deny Access to the Dashboard """
+    # denying access to the user profile for users not logged
+    response = client.get("/profile", follow_redirects=True)
+    assert b"Please log in to access this page." in response.data

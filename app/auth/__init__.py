@@ -7,7 +7,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash
 
 from app.auth.decorators import admin_required
-from app.auth.forms import register_form, login_form
+from app.auth.forms import register_form, login_form, profile_edit_form
 from app.db import db
 from app.db.models import User
 
@@ -80,13 +80,29 @@ def dashboard():
     """ Dashboard page """
     return render_template('dashboard.html')
 
-"""
-@auth.route('/profile')
+
+@auth.route('/profile', methods=['GET', 'POST'])
+@login_required
+def view_profile():
+    user = User.query.filter_by(email=current_user.get_email()).first()
+    return render_template('profile_view.html', user=user, User=User)
+
+
+@auth.route('/profile/edit', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-    return render_template('profile_edit.html')
+    user = User.query.get(current_user.get_id())
+    form = profile_edit_form(obj=user)
+    if form.validate_on_submit():
+        user.about = form.about.data
+        db.session.add(user)
+        db.session.commit()
+        flash("You successfully updated your profile", "success")
+        return redirect(url_for('auth.view_profile'))
+    return render_template('profile_edit.html', form=form)
 
 
+"""
 @auth.route('/account')
 @login_required
 def edit_account():
