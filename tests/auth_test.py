@@ -66,7 +66,7 @@ def test_login_email_and_password_format(client):
 
 def test_register_redirection(client):
     """ Test registration redirects to the login page """
-    response = client.post("/register", data={"email": "test1000@gmail.com",
+    response = client.post("/register", data={"email": "test1000@gmail.com", "username": "test1000",
                                               "password": "test1000", "confirm": "test1000"})
     assert response.headers["Location"] == "/login"
 
@@ -80,22 +80,27 @@ def test_login_redirection(client):
 def test_registration_success(client):
     """ Test registration success """
     # Test successful registration
-    response = client.post("/register", data={"email": "test2000@gmail.com", "password": "test2000",
-                                              "confirm": "test2000"}, follow_redirects=True)
+    response = client.post("/register", data={"email": "test2000@gmail.com", "username": "test2000",
+                                              "password": "test2000", "confirm": "test2000"}, follow_redirects=True)
     assert b"Congratulations, you are a registered user!" in response.data
 
 
 def test_registration_failure(client):
     """ Test registration failures """
     # Test registration fails if the passwords do not match
-    response = client.post("/register", data={"email": "test2000@gmail.com", "password": "test2000",
-                                              "confirm": "test2001"}, follow_redirects=True)
+    response = client.post("/register", data={"email": "test3000@gmail.com", "username": "test3000",
+                                              "password": "test3000", "confirm": "test3001"}, follow_redirects=True)
     assert b"Passwords must match" in response.data
 
-    # Test registration fails if the account is already registered
-    response = client.post("/register", data={"email": "test2000@gmail.com", "password": "test2000",
-                                              "confirm": "test2000"}, follow_redirects=True)
-    assert b"Already Registered" in response.data
+    # Test registration fails if the email already exists
+    response = client.post("/register", data={"email": "test2000@gmail.com", "username": "test3000",
+                                              "password": "test3000", "confirm": "test3000"}, follow_redirects=True)
+    assert b"Email already exists" in response.data
+
+    # Test registration fails if the username already exists
+    response = client.post("/register", data={"email": "test3000@gmail.com", "username": "test2000",
+                                              "password": "test3000", "confirm": "test3000"}, follow_redirects=True)
+    assert b"Username already exists" in response.data
 
 
 def test_login_success(client):
