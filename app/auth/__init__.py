@@ -23,9 +23,11 @@ def register():
         return redirect(url_for('auth.dashboard'))
     form = register_form()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user is None:
-            user = User(email=form.email.data, password=generate_password_hash(password=form.password.data))
+        email = User.query.filter_by(email=form.email.data).first()
+        username = User.query.filter_by(username=form.username.data).first()
+
+        if email is None and username is None:
+            user = User(email=form.email.data, username=form.username.data, password=generate_password_hash(password=form.password.data))
             db.session.add(user)
             db.session.commit()
             if user.id == 1:
@@ -34,9 +36,12 @@ def register():
                 db.session.commit()
             flash('Congratulations, you are a registered user!', "success")
             return redirect(url_for('auth.login'), 302)
+        elif username is not None:
+            flash('Username already exists')
+            return redirect(url_for('auth.register'), 302)
         else:
-            flash('Already Registered')
-            return redirect(url_for('auth.login'), 302)
+            flash('Email already exists')
+            return redirect(url_for('auth.register'), 302)
     return render_template('register.html', form=form)
 
 

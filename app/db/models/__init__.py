@@ -12,6 +12,7 @@ class User(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    username = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(300), nullable=False, unique=True)
     about = db.Column(db.String(300), nullable=True, unique=False)
     authenticated = db.Column(db.Boolean, default=False)
@@ -23,8 +24,9 @@ class User(UserMixin, db.Model):
     # `roles` and `groups` are reserved words that *must* be defined
     # on the `User` model to use group- or role-based authorization.
 
-    def __init__(self, email, password):
+    def __init__(self, email, username, password):
         self.email = email
+        self.username = username
         self.password = password
         self.registered_on = datetime.utcnow()
 
@@ -59,10 +61,7 @@ class Posts(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    # post = db.Column(db.Text, nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    # user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    # user = relationship("User", backrefs='user', lazy=True)
+    username = db.Column(db.Integer, db.ForeignKey('users.username'))
 
     def __init__(self, title, description):
         self.title = title

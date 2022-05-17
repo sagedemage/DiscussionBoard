@@ -6,6 +6,7 @@ from wtforms.fields import *
 class add_post_form(FlaskForm):
     title = StringField('Title', [
         validators.DataRequired(),
+        validators.length(min=1, max=35)
     ], description="Add title for the post")
 
     description = TextAreaField('Post', [
@@ -17,7 +18,7 @@ class add_post_form(FlaskForm):
 class edit_post_form(FlaskForm):
     title = StringField('Title', [
         validators.DataRequired(),
-        validators.length(min=6, max=35)
+        validators.length(min=1, max=35)
     ], description="Add title for the post")
     description = TextAreaField('Post', [
         validators.DataRequired(),
