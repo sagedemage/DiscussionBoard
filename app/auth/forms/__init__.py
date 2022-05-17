@@ -25,6 +25,10 @@ class register_form(FlaskForm):
 
     ], description="Signup with an email")
 
+    username = StringField('Username', [
+        validators.DataRequired(),
+    ], description="create a username")
+
     password = PasswordField('New Password', [
         validators.DataRequired(),
         validators.length(min=6, max=35),
