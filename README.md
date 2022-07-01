@@ -1,10 +1,10 @@
 # Project 4
 
 [![Production Workflow](https://github.com/sagedemage/final_flask_start/actions/workflows/prod.yml/badge.svg)](https://github.com/sagedemage/final_flask_start/actions/workflows/prod.yml)
-* [Production Deployment](https://final-flask-start-prod.herokuapp.com/)
+* [Production Deployment](https://discussion-board-prod.herokuapp.com/)
 
 [![Development Workflow](https://github.com/sagedemage/final_flask_start/actions/workflows/dev.yml/badge.svg)](https://github.com/sagedemage/final_flask_start/actions/workflows/dev.yml)
-* [Development Deployment](https://final-flask-start-dev.herokuapp.com/)
+* [Development Deployment](https://discussion-board-dev.herokuapp.com/)
 
 ## About
 
