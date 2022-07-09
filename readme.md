@@ -1,9 +1,9 @@
-# Project 4
+# Discussion Board
 
-[![Production Workflow](https://github.com/sagedemage/final_flask_start/actions/workflows/prod.yml/badge.svg)](https://github.com/sagedemage/final_flask_start/actions/workflows/prod.yml)
+[![Production Workflow](https://github.com/sagedemage/DiscussionBoard/actions/workflows/prod.yml/badge.svg)](https://github.com/sagedemage/DiscussionBoard/actions/workflows/prod.yml)
 * [Production Deployment](https://discussion-board-prod.herokuapp.com/)
 
-[![Development Workflow](https://github.com/sagedemage/final_flask_start/actions/workflows/dev.yml/badge.svg)](https://github.com/sagedemage/final_flask_start/actions/workflows/dev.yml)
+[![Development Workflow](https://github.com/sagedemage/DiscussionBoard/actions/workflows/dev.yml/badge.svg)](https://github.com/sagedemage/DiscussionBoard/actions/workflows/dev.yml)
 * [Development Deployment](https://discussion-board-dev.herokuapp.com/)
 
 ## About
